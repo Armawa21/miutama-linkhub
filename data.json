@@ -22,11 +22,11 @@
   "sections": [
     {
       "id": "id17887902742223",
-      "title": "MIUTA Property",
+      "title": "PROPERTY",
       "links": [
         {
           "id": "id17887902742224",
-          "title": "Website",
+          "title": "MIUTA Property",
           "url": "https://miuta-property.pages.dev"
         }
       ],
@@ -36,16 +36,22 @@
           "platform": "instagram",
           "label": "Instagram",
           "url": "https://www.instagram.com/miuta.property/"
+        },
+        {
+          "id": "id178879054574718",
+          "platform": "whatsapp",
+          "label": "WhatsApp",
+          "url": "https://api.whatsapp.com/send?phone=62 87773388829"
         }
       ]
     },
     {
       "id": "id17887902742225",
-      "title": "MIUTA Travel",
+      "title": "TRAVELS",
       "links": [
         {
           "id": "id17887902742226",
-          "title": "Website",
+          "title": "MIUTA Travels",
           "url": "https://miuta-travels.pages.dev"
         }
       ],
@@ -55,6 +61,37 @@
           "platform": "instagram",
           "label": "Instagram",
           "url": "https://www.instagram.com/miuta.travels/"
+        },
+        {
+          "id": "id178879055489619",
+          "platform": "whatsapp",
+          "label": "WhatsApp",
+          "url": "https://api.whatsapp.com/send?phone=62 87773388829"
+        }
+      ]
+    },
+    {
+      "id": "id178879047890516",
+      "title": "CREATIVE",
+      "links": [
+        {
+          "id": "id178879073131422",
+          "title": "MAVIS Creative",
+          "url": "https://mavisuals21.wixsite.com/mavis"
+        }
+      ],
+      "socials": [
+        {
+          "id": "id178879056760320",
+          "platform": "instagram",
+          "label": "Instagram",
+          "url": "https://www.instagram.com/maviscreative.id/"
+        },
+        {
+          "id": "id178879057036221",
+          "platform": "whatsapp",
+          "label": "WhatsApp",
+          "url": "https://api.whatsapp.com/send?phone=62 87773388829"
         }
       ]
     },
