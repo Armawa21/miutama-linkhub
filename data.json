@@ -107,6 +107,28 @@
       ]
     },
     {
+      "id": "id178879120519125",
+      "title": "TRUSTIC",
+      "links": [
+        {
+          "id": "id178879124756028",
+          "title": "Trustic.id",
+          "url": "https://www.instagram.com/trustic.id/"
+        },
+        {
+          "id": "id178879128671230",
+          "title": "Trustic.florist",
+          "url": "https://www.instagram.com/trustic.florist/"
+        },
+        {
+          "id": "id178879125772529",
+          "title": "Trustic.label",
+          "url": "https://www.instagram.com/trustic.label/"
+        }
+      ],
+      "socials": []
+    },
+    {
       "id": "id17887902742227",
       "title": "MIUTAMA Investment",
       "links": [
@@ -126,28 +148,6 @@
           "id": "id178879027422210",
           "title": "Private Site",
           "url": "https://miutababycare.manus.space/"
-        }
-      ],
-      "socials": []
-    },
-    {
-      "id": "id178879120519125",
-      "title": "TRUSTIC",
-      "links": [
-        {
-          "id": "id178879124756028",
-          "title": "Trustic.id",
-          "url": "https://www.instagram.com/trustic.id/"
-        },
-        {
-          "id": "id178879128671230",
-          "title": "Trustic.florist",
-          "url": "https://www.instagram.com/trustic.florist/"
-        },
-        {
-          "id": "id178879125772529",
-          "title": "Trustic.label",
-          "url": "https://www.instagram.com/trustic.label/"
         }
       ],
       "socials": []
