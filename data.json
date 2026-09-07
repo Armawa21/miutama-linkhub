@@ -1,7 +1,7 @@
 {
   "profile": {
     "name": "MIUTAMA Group",
-    "description": "Property, travel & lifestyle brands — Bali & beyond.",
+    "description": "Property, travel & lifestyle brands",
     "photo": "images/profile.jpg"
   },
   "socialsPosition": "top",
@@ -10,37 +10,77 @@
       "id": "id17887890414622",
       "platform": "instagram",
       "label": "Instagram",
-      "mono": "IG",
       "url": "https://www.instagram.com/miutamagroup/"
     },
     {
       "id": "id17887892947403",
       "platform": "whatsapp",
       "label": "WhatsApp",
-      "mono": "WA",
       "url": "https://api.whatsapp.com/send?phone=62 87773388829"
     }
   ],
-  "links": [
+  "sections": [
     {
-      "id": "l1",
+      "id": "id17887902742223",
       "title": "MIUTA Property",
-      "url": "https://miuta-property.pages.dev"
+      "links": [
+        {
+          "id": "id17887902742224",
+          "title": "Website",
+          "url": "https://miuta-property.pages.dev"
+        }
+      ],
+      "socials": [
+        {
+          "id": "id178879032069813",
+          "platform": "instagram",
+          "label": "Instagram",
+          "url": "https://www.instagram.com/miuta.property/"
+        }
+      ]
     },
     {
-      "id": "l2",
+      "id": "id17887902742225",
       "title": "MIUTA Travel",
-      "url": "https://miuta-travels.pages.dev"
+      "links": [
+        {
+          "id": "id17887902742226",
+          "title": "Website",
+          "url": "https://miuta-travels.pages.dev"
+        }
+      ],
+      "socials": [
+        {
+          "id": "id178879036646915",
+          "platform": "instagram",
+          "label": "Instagram",
+          "url": "https://www.instagram.com/miuta.travels/"
+        }
+      ]
     },
     {
-      "id": "l3",
+      "id": "id17887902742227",
       "title": "MIUTAMA Investment",
-      "url": "https://miutama-investment.pages.dev"
+      "links": [
+        {
+          "id": "id17887902742228",
+          "title": "Private Site",
+          "url": "https://miutama-investment.pages.dev"
+        }
+      ],
+      "socials": []
     },
     {
-      "id": "id17887894397145",
+      "id": "id17887902742229",
       "title": "MIUTA Baby Care",
-      "url": "https://miutababycare.manus.space/"
+      "links": [
+        {
+          "id": "id178879027422210",
+          "title": "Private Site",
+          "url": "https://miutababycare.manus.space/"
+        }
+      ],
+      "socials": []
     }
   ]
 }
