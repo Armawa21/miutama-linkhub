@@ -1,14 +1,46 @@
 {
   "profile": {
-    "name": "MIUTAMA",
+    "name": "MIUTAMA Group",
     "description": "Property, travel & lifestyle brands — Bali & beyond.",
-    "photo": ""
+    "photo": "images/profile.jpg"
   },
   "socialsPosition": "top",
-  "socials": [],
+  "socials": [
+    {
+      "id": "id17887890414622",
+      "platform": "instagram",
+      "label": "Instagram",
+      "mono": "IG",
+      "url": "https://www.instagram.com/miutamagroup/"
+    },
+    {
+      "id": "id17887892947403",
+      "platform": "whatsapp",
+      "label": "WhatsApp",
+      "mono": "WA",
+      "url": "https://api.whatsapp.com/send?phone=62 87773388829"
+    }
+  ],
   "links": [
-    { "id": "l1", "title": "MIUTA Property", "url": "https://miuta-property.pages.dev" },
-    { "id": "l2", "title": "MIUTA Travel", "url": "https://miuta-travels.pages.dev" },
-    { "id": "l3", "title": "MIUTAMA Investment", "url": "https://miutama-investment.pages.dev" }
+    {
+      "id": "l1",
+      "title": "MIUTA Property",
+      "url": "https://miuta-property.pages.dev"
+    },
+    {
+      "id": "l2",
+      "title": "MIUTA Travel",
+      "url": "https://miuta-travels.pages.dev"
+    },
+    {
+      "id": "l3",
+      "title": "MIUTAMA Investment",
+      "url": "https://miutama-investment.pages.dev"
+    },
+    {
+      "id": "id17887894397145",
+      "title": "MIUTA Baby Care",
+      "url": "https://miutababycare.manus.space/"
+    }
   ]
 }
