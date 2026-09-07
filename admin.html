@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#141414; --surface:#1c1c1c; --surface2:#242424;
+    --bg:#141414; --surface:#1c1c1c; --surface2:#242424; --surface3:#2c2c2c;
     --text:#ededea; --text-muted:#8a8a86; --accent:#b3b2ad;
     --border:rgba(237,237,234,0.14); --danger:#c06b6b; --ok:#7fb08a;
   }
@@ -23,7 +23,8 @@
     background:var(--surface); border:1px solid var(--border); border-radius:6px;
     padding:20px; margin-bottom:18px;
   }
-  section h2{font-size:14px; font-weight:700; margin:0 0 14px; color:var(--accent); letter-spacing:0.2px;}
+  section h2{font-size:14px; font-weight:700; margin:0 0 14px; color:var(--text); letter-spacing:0.2px;}
+  section h2 small{display:block; font-weight:400; color:var(--text-muted); font-size:12px; margin-top:3px;}
   label{display:block; font-size:12.5px; color:var(--text-muted); margin:0 0 5px;}
   input[type=text], input[type=url], input[type=password], textarea, select{
     width:100%; background:var(--bg); border:1px solid var(--border); border-radius:4px;
@@ -34,20 +35,26 @@
   .row > *{flex:1;}
   .field-group{
     border:1px solid var(--border); border-radius:5px; padding:12px; margin-bottom:10px; position:relative;
+    background:var(--surface2);
   }
   .field-group .field-row{display:flex; gap:8px; align-items:flex-start;}
   .field-group .field-row > div{flex:1;}
+  .icon-preview{
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;
+  }
+  .icon-preview svg{width:16px; height:16px; color:var(--accent);}
   .mini-btns{display:flex; flex-direction:column; gap:4px;}
   button{
     font-family:inherit; cursor:pointer; border-radius:4px; border:1px solid var(--border);
-    background:var(--surface2); color:var(--text); padding:7px 10px; font-size:12.5px;
+    background:var(--surface3); color:var(--text); padding:7px 10px; font-size:12.5px;
   }
   button:hover{border-color:var(--accent);}
   .btn-icon{padding:5px 8px; font-size:12px; line-height:1;}
   .btn-remove{color:var(--danger); border-color:transparent;}
   .btn-add{width:100%; margin-top:4px; background:transparent; border-style:dashed;}
   .btn-primary{
-    background:var(--accent); color:#1a1610; border-color:var(--accent); font-weight:600;
+    background:var(--accent); color:#1a1a1a; border-color:var(--accent); font-weight:600;
     padding:11px 18px; font-size:14px; width:100%;
   }
   .btn-secondary{width:100%; padding:10px; margin-bottom:10px;}
@@ -59,30 +66,39 @@
   }
   .status.ok{display:block; background:rgba(127,176,138,0.12); color:var(--ok); border:1px solid rgba(127,176,138,0.3);}
   .status.err{display:block; background:rgba(192,107,107,0.12); color:var(--danger); border:1px solid rgba(192,107,107,0.3);}
-  .status.loading{display:block; background:rgba(239,234,224,0.08); color:var(--text-muted); border:1px solid var(--border);}
+  .status.loading{display:block; background:rgba(237,237,234,0.08); color:var(--text-muted); border:1px solid var(--border);}
   .checkbox-line{display:flex; align-items:center; gap:8px; margin-bottom:4px;}
   .checkbox-line input{width:auto;}
   .checkbox-line label{margin:0; font-size:12.5px;}
   .hint{font-size:11.5px; color:var(--text-muted); margin:-6px 0 12px;}
   .photo-preview{width:64px; height:64px; border-radius:50%; object-fit:cover; border:1px solid var(--border); margin-bottom:10px; display:block;}
   a{color:var(--accent);}
+  .section-block{
+    border:1px solid var(--border); border-radius:6px; padding:16px; margin-bottom:14px; background:var(--surface2);
+  }
+  .section-block-header{display:flex; gap:8px; align-items:flex-start; margin-bottom:10px;}
+  .section-block-header > div{flex:1;}
+  .section-block-header input{margin-bottom:0; font-weight:600;}
+  .nested-label{font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-muted); margin:14px 0 8px;}
+  .nested-label:first-of-type{margin-top:4px;}
+  hr.sep{border:none; border-top:1px solid var(--border); margin:14px 0;}
 </style>
 </head>
 <body>
 <main>
   <h1>Admin Link Bio</h1>
-  <p class="sub">Ubah foto, deskripsi, social media, dan tombol link. Klik "Simpan" untuk update ke GitHub.</p>
+  <p class="sub">Ubah foto, deskripsi, social media umum, dan bagian per-brand. Klik "Simpan" untuk update ke GitHub.</p>
 
   <section id="sec-github">
     <h2>Koneksi GitHub</h2>
     <div class="row">
       <div>
         <label>Username / Organisasi GitHub</label>
-        <input type="text" id="gh-owner" placeholder="mikearmawa">
+        <input type="text" id="gh-owner" placeholder="Armawa21">
       </div>
       <div>
         <label>Nama Repo</label>
-        <input type="text" id="gh-repo" placeholder="link-bio">
+        <input type="text" id="gh-repo" placeholder="miutama-linkhub">
       </div>
     </div>
     <div class="row">
@@ -92,15 +108,16 @@
       </div>
       <div>
         <label>Personal Access Token</label>
-        <input type="password" id="gh-token" placeholder="ghp_...">
+        <input type="password" id="gh-token" placeholder="github_pat_...">
       </div>
     </div>
     <div class="checkbox-line">
       <input type="checkbox" id="gh-remember">
       <label for="gh-remember">Ingat data ini di browser ini (jangan centang di komputer bersama)</label>
     </div>
-    <p class="hint">Token dibuat di GitHub → Settings → Developer settings → Fine-grained tokens. Beri akses hanya ke repo ini, permission "Contents: Read and write". Token tidak pernah dikirim ke mana pun selain GitHub.</p>
+    <p class="hint">Token dibuat di GitHub → Settings → Developer settings → Fine-grained tokens. Beri akses hanya ke repo ini, permission "Contents: Read and write".</p>
     <button class="btn-secondary" id="btn-load" style="width:auto;">Muat data saat ini dari GitHub</button>
+    <div class="status" id="gh-status"></div>
   </section>
 
   <section id="sec-profile">
@@ -110,7 +127,7 @@
     <input type="text" id="p-name">
     <label>Deskripsi singkat</label>
     <textarea id="p-desc"></textarea>
-    <label>Foto (upload file, akan disimpan ke repo)</label>
+    <label>Foto / Logo (upload file, akan disimpan ke repo)</label>
     <input type="file" id="p-photo-file" accept="image/*">
     <p class="hint">Atau kosongkan lalu isi URL foto langsung di bawah ini (kalau sudah ada foto di hosting lain).</p>
     <label>URL Foto (opsional)</label>
@@ -118,20 +135,24 @@
   </section>
 
   <section id="sec-social">
-    <h2>Social Media</h2>
-    <label>Posisi ikon social media</label>
+    <h2>Social Media Umum
+      <small>Akun resmi MIUTAMA Group, tampil dekat foto/nama</small>
+    </h2>
+    <label>Posisi ikon social media umum</label>
     <div class="radio-group">
       <label><input type="radio" name="social-pos" value="top" checked> Di atas (dekat foto)</label>
-      <label><input type="radio" name="social-pos" value="bottom"> Di bawah tombol link</label>
+      <label><input type="radio" name="social-pos" value="bottom"> Di bawah semua bagian</label>
     </div>
     <div id="social-list"></div>
     <button class="btn-add" id="btn-add-social">+ Tambah social media</button>
   </section>
 
-  <section id="sec-links">
-    <h2>Tombol Link</h2>
-    <div id="link-list"></div>
-    <button class="btn-add" id="btn-add-link">+ Tambah link</button>
+  <section id="sec-sections">
+    <h2>Bagian per Brand
+      <small>Tiap brand (Property, Travel, dst) punya tombol website, social media, dan kontak sendiri</small>
+    </h2>
+    <div id="sections-list"></div>
+    <button class="btn-add" id="btn-add-section">+ Tambah bagian baru</button>
   </section>
 
   <button class="btn-primary" id="btn-save">Simpan ke GitHub</button>
@@ -140,23 +161,43 @@
 
 <script>
 const PLATFORMS = {
-  instagram: {label:'Instagram', mono:'IG'},
-  tiktok: {label:'TikTok', mono:'TT'},
-  youtube: {label:'YouTube', mono:'YT'},
-  facebook: {label:'Facebook', mono:'FB'},
-  x: {label:'X / Twitter', mono:'X'},
-  linkedin: {label:'LinkedIn', mono:'IN'},
-  whatsapp: {label:'WhatsApp', mono:'WA'},
-  email: {label:'Email', mono:'@'},
-  spotify: {label:'Spotify', mono:'SP'},
-  pinterest: {label:'Pinterest', mono:'PN'},
-  threads: {label:'Threads', mono:'TH'},
-  website: {label:'Website', mono:'W'},
-  custom: {label:'Custom', mono:''}
+  instagram: {label:'Instagram'},
+  tiktok: {label:'TikTok'},
+  youtube: {label:'YouTube'},
+  facebook: {label:'Facebook'},
+  x: {label:'X / Twitter'},
+  linkedin: {label:'LinkedIn'},
+  whatsapp: {label:'WhatsApp'},
+  email: {label:'Email'},
+  spotify: {label:'Spotify'},
+  pinterest: {label:'Pinterest'},
+  threads: {label:'Threads'},
+  website: {label:'Website'},
+  custom: {label:'Custom'}
 };
 
-let fileSha = null;   // sha of data.json, needed to update it
-let photoFile = null; // pending upload
+const ICONS = {
+  instagram: '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/>',
+  tiktok: '<path d="M9 19a3.2 3.2 0 1 1 3.2-3.2V4"/><path d="M12.2 4c.4 2.7 2.6 4.8 5.3 5.1"/>',
+  youtube: '<rect x="3" y="6" width="18" height="12" rx="3"/><path d="M10 9.3l6 2.7-6 2.7z" fill="currentColor" stroke="none"/>',
+  facebook: '<circle cx="12" cy="12" r="8.5"/><path d="M13.5 8.2h-1c-1 0-1.5.5-1.5 1.5v1.6H9.5v2H11V17h2v-3.7h1.6l.3-2H13v-1.2c0-.4.2-.7.8-.7h1V8.2z" fill="currentColor" stroke="none"/>',
+  x: '<circle cx="12" cy="12" r="8.5"/><path d="M8.3 8.3l7.4 7.4M15.7 8.3l-7.4 7.4"/>',
+  linkedin: '<circle cx="12" cy="12" r="8.5"/><circle cx="8.7" cy="8.8" r="0.9" fill="currentColor" stroke="none"/><path d="M8.7 11.2v5.3M12 11.2v5.3M12 13.4c0-1.4 1-2.2 2-2.2s2 .7 2 2.2v3.1"/>',
+  whatsapp: '<path d="M12 3.3a8.7 8.7 0 0 0-7.5 13l-1.2 4.2 4.4-1.1A8.7 8.7 0 1 0 12 3.3z"/><path d="M8.6 8.6c.2-.4.4-.4.6-.4h.4c.15 0 .3 0 .45.35.2.45.6 1.55.65 1.65.05.15.1.3 0 .45-.1.2-.15.25-.3.4-.15.15-.3.25-.15.5.4.65 1.4 1.7 2.6 2.15.2.05.3 0 .45-.15.15-.15.55-.6.7-.85.15-.2.3-.15.45-.1.2.1 1.2.55 1.4.65.2.1.3.15.35.25.05.1.05.55-.15 1.05-.2.5-1.05.95-1.45 1-.4.05-.8.1-2.6-.55-2.2-.8-3.6-3.05-3.75-3.2-.15-.15-1.05-1.35-1.05-2.6 0-1.25.65-1.85.8-2.1z" fill="currentColor" stroke="none"/>',
+  email: '<rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4.5 7.3l7.5 5.6 7.5-5.6"/>',
+  spotify: '<circle cx="12" cy="12" r="8.5"/><path d="M7.2 9.8c3.2-1 6.4-.6 9 1"/><path d="M7.6 12.6c2.6-.8 5.2-.5 7.4.8"/><path d="M8.1 15.3c2-.5 4-.4 5.5.6"/>',
+  pinterest: '<circle cx="12" cy="12" r="8.5"/><path d="M10.3 16.5L11.7 10.5"/><path d="M12 10c0-1.4.9-2.3 2.1-2.3 1.5 0 2.3 1 2.3 2.5 0 1.9-.9 3.6-2.4 3.6-.75 0-1.3-.4-1.5-.95"/>',
+  threads: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2.6"/><path d="M14.6 12v1.1a1.8 1.8 0 0 0 3.4-.8c0-2.7-2-4.8-5.4-4.8-3.2 0-5.4 2.3-5.4 5.6s2.2 5.4 5.4 5.4c1.5 0 2.7-.45 3.6-1.2"/>',
+  website: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.3 2.3 2.3 14.7 0 17M12 3.5c-2.3 2.3-2.3 14.7 0 17"/>',
+  custom: '<path d="M9.5 14.5l5-5"/><path d="M8.3 11.7l-1.6 1.6a2.7 2.7 0 0 0 3.8 3.8l1.6-1.6"/><path d="M15.7 12.3l1.6-1.6a2.7 2.7 0 0 0-3.8-3.8l-1.6 1.6"/>'
+};
+function svgIconMarkup(platform){
+  const inner = ICONS[platform] || ICONS.custom;
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
+}
+
+let fileSha = null;
+let photoFile = null;
 let uid = 0;
 const newId = () => 'id' + (Date.now()) + (uid++);
 
@@ -169,13 +210,12 @@ function cfg(){
   };
 }
 
-function setStatus(msg, type){
-  const el = document.getElementById('status');
+function setStatus(msg, type, targetId){
+  const el = document.getElementById(targetId || 'status');
   el.textContent = msg;
   el.className = 'status ' + (type || '');
 }
 
-// ---------- localStorage remember ----------
 function loadRemembered(){
   const raw = localStorage.getItem('linkbio_admin_cfg');
   if(!raw) return;
@@ -196,7 +236,6 @@ function maybeRemember(){
   }
 }
 
-// ---------- GitHub API helpers ----------
 async function ghGetFile(path){
   const c = cfg();
   const url = `https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}?ref=${encodeURIComponent(c.branch)}`;
@@ -225,17 +264,15 @@ async function ghPutFile(path, base64Content, message, sha){
   return await res.json();
 }
 
-function utf8ToBase64(str){
-  return btoa(unescape(encodeURIComponent(str)));
-}
-function base64ToUtf8(str){
-  return decodeURIComponent(escape(atob(str)));
+function utf8ToBase64(str){ return btoa(unescape(encodeURIComponent(str))); }
+function base64ToUtf8(str){ return decodeURIComponent(escape(atob(str))); }
+function escAttr(str){
+  return String(str||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 }
 
-// ---------- Social rows ----------
-function addSocialRow(data){
-  data = data || { id:newId(), platform:'instagram', label:PLATFORMS.instagram.label, mono:PLATFORMS.instagram.mono, url:'' };
-  const list = document.getElementById('social-list');
+// ---------- Generic social row (reused for group-level and per-section) ----------
+function addSocialRow(container, data){
+  data = data || { id:newId(), platform:'instagram', label:PLATFORMS.instagram.label, url:'' };
   const wrap = document.createElement('div');
   wrap.className = 'field-group';
   wrap.dataset.id = data.id;
@@ -246,15 +283,13 @@ function addSocialRow(data){
 
   wrap.innerHTML = `
     <div class="field-row">
+      <div class="icon-preview">${svgIconMarkup(data.platform)}</div>
       <div>
-        <label>Platform</label>
         <select class="s-platform">${platformOptions}</select>
-        <div class="row s-custom-row" style="display:${data.platform==='custom'?'flex':'none'};">
-          <div><label>Nama label</label><input type="text" class="s-label" value="${escAttr(data.label)}"></div>
-          <div><label>Monogram (max 3 huruf)</label><input type="text" maxlength="3" class="s-mono" value="${escAttr(data.mono)}"></div>
+        <div class="s-custom-row" style="display:${data.platform==='custom'?'block':'none'};">
+          <label>Nama label</label><input type="text" class="s-label" value="${escAttr(data.label)}">
         </div>
-        <label>URL profil</label>
-        <input type="text" class="s-url" value="${escAttr(data.url)}" placeholder="https://...">
+        <input type="text" class="s-url" value="${escAttr(data.url)}" placeholder="https://..." style="margin-bottom:0;">
       </div>
       <div class="mini-btns">
         <button type="button" class="btn-icon s-up">↑</button>
@@ -263,31 +298,30 @@ function addSocialRow(data){
       </div>
     </div>
   `;
-  list.appendChild(wrap);
+  container.appendChild(wrap);
 
   const platformSel = wrap.querySelector('.s-platform');
   const customRow = wrap.querySelector('.s-custom-row');
+  const iconPreview = wrap.querySelector('.icon-preview');
   platformSel.addEventListener('change', () => {
-    customRow.style.display = platformSel.value === 'custom' ? 'flex' : 'none';
+    customRow.style.display = platformSel.value === 'custom' ? 'block' : 'none';
+    iconPreview.innerHTML = svgIconMarkup(platformSel.value);
   });
   wrap.querySelector('.s-remove').addEventListener('click', () => wrap.remove());
   wrap.querySelector('.s-up').addEventListener('click', () => moveRow(wrap, -1));
   wrap.querySelector('.s-down').addEventListener('click', () => moveRow(wrap, 1));
 }
 
-function addLinkRow(data){
+function addLinkRow(container, data){
   data = data || { id:newId(), title:'', url:'' };
-  const list = document.getElementById('link-list');
   const wrap = document.createElement('div');
   wrap.className = 'field-group';
   wrap.dataset.id = data.id;
   wrap.innerHTML = `
     <div class="field-row">
       <div>
-        <label>Judul tombol</label>
-        <input type="text" class="l-title" value="${escAttr(data.title)}" placeholder="Book via WhatsApp">
-        <label>URL</label>
-        <input type="text" class="l-url" value="${escAttr(data.url)}" placeholder="https://...">
+        <input type="text" class="l-title" value="${escAttr(data.title)}" placeholder="Judul tombol, mis. Kunjungi Website">
+        <input type="text" class="l-url" value="${escAttr(data.url)}" placeholder="https://..." style="margin-bottom:0;">
       </div>
       <div class="mini-btns">
         <button type="button" class="btn-icon l-up">↑</button>
@@ -296,7 +330,7 @@ function addLinkRow(data){
       </div>
     </div>
   `;
-  list.appendChild(wrap);
+  container.appendChild(wrap);
   wrap.querySelector('.l-remove').addEventListener('click', () => wrap.remove());
   wrap.querySelector('.l-up').addEventListener('click', () => moveRow(wrap, -1));
   wrap.querySelector('.l-down').addEventListener('click', () => moveRow(wrap, 1));
@@ -311,31 +345,74 @@ function moveRow(el, dir){
   }
 }
 
-function escAttr(str){
-  return String(str||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-}
-
-// ---------- Collect form state ----------
-function collectSocials(){
-  return Array.from(document.querySelectorAll('#social-list .field-group')).map(wrap => {
+function collectSocials(container){
+  return Array.from(container.children).map(wrap => {
     const platform = wrap.querySelector('.s-platform').value;
     const isCustom = platform === 'custom';
     const label = isCustom ? wrap.querySelector('.s-label').value.trim() : PLATFORMS[platform].label;
-    const mono = isCustom ? wrap.querySelector('.s-mono').value.trim().toUpperCase() : PLATFORMS[platform].mono;
     return {
       id: wrap.dataset.id,
-      platform, label, mono,
+      platform, label,
       url: wrap.querySelector('.s-url').value.trim()
     };
   }).filter(s => s.url);
 }
 
-function collectLinks(){
-  return Array.from(document.querySelectorAll('#link-list .field-group')).map(wrap => ({
+function collectLinks(container){
+  return Array.from(container.children).map(wrap => ({
     id: wrap.dataset.id,
     title: wrap.querySelector('.l-title').value.trim(),
     url: wrap.querySelector('.l-url').value.trim()
   })).filter(l => l.title && l.url);
+}
+
+// ---------- Section blocks (per-brand groups) ----------
+function addSectionBlock(data){
+  data = data || { id:newId(), title:'', links:[], socials:[] };
+  const list = document.getElementById('sections-list');
+  const wrap = document.createElement('div');
+  wrap.className = 'section-block';
+  wrap.dataset.id = data.id;
+  wrap.innerHTML = `
+    <div class="section-block-header">
+      <div>
+        <input type="text" class="sec-title" value="${escAttr(data.title)}" placeholder="Nama bagian, mis. MIUTA Property">
+      </div>
+      <div class="mini-btns">
+        <button type="button" class="btn-icon sec-up">↑</button>
+        <button type="button" class="btn-icon sec-down">↓</button>
+        <button type="button" class="btn-icon btn-remove sec-remove">✕</button>
+      </div>
+    </div>
+    <div class="nested-label">Tombol (website, kontak, dll)</div>
+    <div class="sec-links-list"></div>
+    <button type="button" class="btn-add sec-add-link">+ Tambah tombol</button>
+    <div class="nested-label">Social media bagian ini</div>
+    <div class="sec-socials-list"></div>
+    <button type="button" class="btn-add sec-add-social">+ Tambah social media</button>
+  `;
+  list.appendChild(wrap);
+
+  const linksList = wrap.querySelector('.sec-links-list');
+  const socialsList = wrap.querySelector('.sec-socials-list');
+  (data.links || []).forEach(l => addLinkRow(linksList, l));
+  (data.socials || []).forEach(s => addSocialRow(socialsList, s));
+  if((data.links || []).length === 0) addLinkRow(linksList);
+
+  wrap.querySelector('.sec-add-link').addEventListener('click', () => addLinkRow(linksList));
+  wrap.querySelector('.sec-add-social').addEventListener('click', () => addSocialRow(socialsList));
+  wrap.querySelector('.sec-remove').addEventListener('click', () => wrap.remove());
+  wrap.querySelector('.sec-up').addEventListener('click', () => moveRow(wrap, -1));
+  wrap.querySelector('.sec-down').addEventListener('click', () => moveRow(wrap, 1));
+}
+
+function collectSections(){
+  return Array.from(document.querySelectorAll('#sections-list .section-block')).map(wrap => ({
+    id: wrap.dataset.id,
+    title: wrap.querySelector('.sec-title').value.trim(),
+    links: collectLinks(wrap.querySelector('.sec-links-list')),
+    socials: collectSocials(wrap.querySelector('.sec-socials-list'))
+  })).filter(sec => sec.title || sec.links.length || sec.socials.length);
 }
 
 // ---------- Load from GitHub ----------
@@ -343,23 +420,23 @@ document.getElementById('btn-load').addEventListener('click', async () => {
   maybeRemember();
   const c = cfg();
   if(!c.owner || !c.repo || !c.token){
-    setStatus('Isi username, nama repo, dan token dulu.', 'err');
+    setStatus('Isi username, nama repo, dan token dulu.', 'err', 'gh-status');
     return;
   }
-  setStatus('Memuat data dari GitHub...', 'loading');
+  setStatus('Memuat data dari GitHub...', 'loading', 'gh-status');
   try{
     const file = await ghGetFile('data.json');
     if(!file){
-      setStatus('data.json belum ada di repo ini — isi form lalu klik Simpan untuk membuatnya.', 'ok');
+      setStatus('data.json belum ada di repo ini — isi form lalu klik Simpan untuk membuatnya.', 'ok', 'gh-status');
       fileSha = null;
       return;
     }
     fileSha = file.sha;
     const data = JSON.parse(base64ToUtf8(file.content));
-    populateForm(data);
-    setStatus('Data berhasil dimuat.', 'ok');
+    const migrated = populateForm(data);
+    setStatus(migrated ? 'Data dimuat & format lama otomatis dikonversi ke Bagian per Brand. Cek lalu klik Simpan.' : 'Data berhasil dimuat.', 'ok', 'gh-status');
   }catch(e){
-    setStatus('Gagal memuat: ' + e.message, 'err');
+    setStatus('Gagal memuat: ' + e.message, 'err', 'gh-status');
   }
 });
 
@@ -376,11 +453,24 @@ function populateForm(data){
   const pos = data.socialsPosition === 'bottom' ? 'bottom' : 'top';
   document.querySelector(`input[name=social-pos][value=${pos}]`).checked = true;
 
-  document.getElementById('social-list').innerHTML = '';
-  (data.socials || []).forEach(addSocialRow);
+  const socialList = document.getElementById('social-list');
+  socialList.innerHTML = '';
+  (data.socials || []).forEach(s => addSocialRow(socialList, s));
 
-  document.getElementById('link-list').innerHTML = '';
-  (data.links || []).forEach(addLinkRow);
+  const sectionsList = document.getElementById('sections-list');
+  sectionsList.innerHTML = '';
+  let migrated = false;
+  if(data.sections && data.sections.length){
+    data.sections.forEach(addSectionBlock);
+  }else if(data.links && data.links.length){
+    migrated = true;
+    data.links.forEach(l => addSectionBlock({
+      id:newId(), title:l.title,
+      links:[{id:newId(), title:'Kunjungi Website', url:l.url}],
+      socials:[]
+    }));
+  }
+  return migrated;
 }
 
 // ---------- Photo upload preview ----------
@@ -426,17 +516,17 @@ document.getElementById('btn-save').addEventListener('click', async () => {
         photo: photoPath
       },
       socialsPosition: document.querySelector('input[name=social-pos]:checked').value,
-      socials: collectSocials(),
-      links: collectLinks()
+      socials: collectSocials(document.getElementById('social-list')),
+      sections: collectSections()
     };
 
     setStatus('Menyimpan data.json...', 'loading');
-    const latest = await ghGetFile('data.json'); // refresh sha to avoid conflict
+    const latest = await ghGetFile('data.json');
     const sha = latest ? latest.sha : null;
     const result = await ghPutFile('data.json', utf8ToBase64(JSON.stringify(payload, null, 2)), 'Update link bio', sha);
     fileSha = result.content.sha;
     photoFile = null;
-    setStatus('Tersimpan! GitHub Pages biasanya butuh sekitar 30–60 detik untuk update halaman publik.', 'ok');
+    setStatus('Tersimpan! GitHub Pages / Cloudflare biasanya butuh sekitar 30–60 detik untuk update halaman publik.', 'ok');
   }catch(e){
     setStatus('Gagal menyimpan: ' + e.message, 'err');
   }
@@ -452,11 +542,11 @@ function fileToDataUrl(file){
 }
 
 // ---------- Init ----------
-document.getElementById('btn-add-social').addEventListener('click', () => addSocialRow());
-document.getElementById('btn-add-link').addEventListener('click', () => addLinkRow());
+document.getElementById('btn-add-social').addEventListener('click', () => addSocialRow(document.getElementById('social-list')));
+document.getElementById('btn-add-section').addEventListener('click', () => addSectionBlock());
 loadRemembered();
-if(document.getElementById('social-list').children.length === 0) addSocialRow();
-if(document.getElementById('link-list').children.length === 0) addLinkRow();
+if(document.getElementById('social-list').children.length === 0) addSocialRow(document.getElementById('social-list'));
+if(document.getElementById('sections-list').children.length === 0) addSectionBlock();
 </script>
 </body>
 </html>
