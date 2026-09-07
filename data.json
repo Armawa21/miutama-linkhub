@@ -1,18 +1,14 @@
 {
   "profile": {
-    "name": "Mike Armawa",
-    "description": "Marketing & storytelling for luxury hospitality \u2014 Bali & Penang.",
+    "name": "MIUTAMA",
+    "description": "Property, travel & lifestyle brands — Bali & beyond.",
     "photo": ""
   },
   "socialsPosition": "top",
-  "socials": [
-    { "id": "s1", "platform": "instagram", "label": "Instagram", "mono": "IG", "url": "https://instagram.com/mikearmawa" },
-    { "id": "s2", "platform": "youtube", "label": "YouTube", "mono": "YT", "url": "https://youtube.com/@MikeArmawa" },
-    { "id": "s3", "platform": "facebook", "label": "Facebook", "mono": "FB", "url": "https://facebook.com/mike.armawa" },
-    { "id": "s4", "platform": "linkedin", "label": "LinkedIn", "mono": "IN", "url": "https://linkedin.com/in/mike-armawa-31b3011b4" }
-  ],
+  "socials": [],
   "links": [
-    { "id": "l1", "title": "My Blog", "url": "https://mikearmawa.blogspot.com/" },
-    { "id": "l2", "title": "WhatsApp Me", "url": "https://wa.me/62" }
+    { "id": "l1", "title": "MIUTA Property", "url": "https://miuta-property.pages.dev" },
+    { "id": "l2", "title": "MIUTA Travel", "url": "https://miuta-travels.pages.dev" },
+    { "id": "l3", "title": "MIUTAMA Investment", "url": "https://miutama-investment.pages.dev" }
   ]
 }
