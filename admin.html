@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Link Bio</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#15120e; --surface:#1e1a15; --surface2:#26201a;
+    --text:#efeae0; --text-muted:#9c9284; --accent:#c09a6b;
+    --border:rgba(239,234,224,0.14); --danger:#c06b6b; --ok:#7fb08a;
+  }
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg); color:var(--text); font-family:'Manrope',sans-serif;
+    margin:0; padding:32px 16px 80px; font-size:14px;
+  }
+  main{max-width:640px; margin:0 auto;}
+  h1{font-size:20px; font-weight:700; margin:0 0 4px;}
+  .sub{color:var(--text-muted); margin:0 0 28px; font-size:13px;}
+  section{
+    background:var(--surface); border:1px solid var(--border); border-radius:6px;
+    padding:20px; margin-bottom:18px;
+  }
+  section h2{font-size:14px; font-weight:700; margin:0 0 14px; color:var(--accent); letter-spacing:0.2px;}
+  label{display:block; font-size:12.5px; color:var(--text-muted); margin:0 0 5px;}
+  input[type=text], input[type=url], input[type=password], textarea, select{
+    width:100%; background:var(--bg); border:1px solid var(--border); border-radius:4px;
+    color:var(--text); padding:9px 10px; font-family:inherit; font-size:13.5px; margin-bottom:12px;
+  }
+  textarea{resize:vertical; min-height:56px;}
+  .row{display:flex; gap:10px;}
+  .row > *{flex:1;}
+  .field-group{
+    border:1px solid var(--border); border-radius:5px; padding:12px; margin-bottom:10px; position:relative;
+  }
+  .field-group .field-row{display:flex; gap:8px; align-items:flex-start;}
+  .field-group .field-row > div{flex:1;}
+  .mini-btns{display:flex; flex-direction:column; gap:4px;}
+  button{
+    font-family:inherit; cursor:pointer; border-radius:4px; border:1px solid var(--border);
+    background:var(--surface2); color:var(--text); padding:7px 10px; font-size:12.5px;
+  }
+  button:hover{border-color:var(--accent);}
+  .btn-icon{padding:5px 8px; font-size:12px; line-height:1;}
+  .btn-remove{color:var(--danger); border-color:transparent;}
+  .btn-add{width:100%; margin-top:4px; background:transparent; border-style:dashed;}
+  .btn-primary{
+    background:var(--accent); color:#1a1610; border-color:var(--accent); font-weight:600;
+    padding:11px 18px; font-size:14px; width:100%;
+  }
+  .btn-secondary{width:100%; padding:10px; margin-bottom:10px;}
+  .radio-group{display:flex; gap:16px; margin-bottom:6px;}
+  .radio-group label{display:flex; align-items:center; gap:6px; color:var(--text); font-size:13px;}
+  .radio-group input{width:auto; margin:0;}
+  .status{
+    margin-top:14px; padding:10px 12px; border-radius:4px; font-size:13px; display:none;
+  }
+  .status.ok{display:block; background:rgba(127,176,138,0.12); color:var(--ok); border:1px solid rgba(127,176,138,0.3);}
+  .status.err{display:block; background:rgba(192,107,107,0.12); color:var(--danger); border:1px solid rgba(192,107,107,0.3);}
+  .status.loading{display:block; background:rgba(239,234,224,0.08); color:var(--text-muted); border:1px solid var(--border);}
+  .checkbox-line{display:flex; align-items:center; gap:8px; margin-bottom:4px;}
+  .checkbox-line input{width:auto;}
+  .checkbox-line label{margin:0; font-size:12.5px;}
+  .hint{font-size:11.5px; color:var(--text-muted); margin:-6px 0 12px;}
+  .photo-preview{width:64px; height:64px; border-radius:50%; object-fit:cover; border:1px solid var(--border); margin-bottom:10px; display:block;}
+  a{color:var(--accent);}
+</style>
+</head>
+<body>
+<main>
+  <h1>Admin Link Bio</h1>
+  <p class="sub">Ubah foto, deskripsi, social media, dan tombol link. Klik "Simpan" untuk update ke GitHub.</p>
+
+  <section id="sec-github">
+    <h2>Koneksi GitHub</h2>
+    <div class="row">
+      <div>
+        <label>Username / Organisasi GitHub</label>
+        <input type="text" id="gh-owner" placeholder="mikearmawa">
+      </div>
+      <div>
+        <label>Nama Repo</label>
+        <input type="text" id="gh-repo" placeholder="link-bio">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Branch</label>
+        <input type="text" id="gh-branch" value="main">
+      </div>
+      <div>
+        <label>Personal Access Token</label>
+        <input type="password" id="gh-token" placeholder="ghp_...">
+      </div>
+    </div>
+    <div class="checkbox-line">
+      <input type="checkbox" id="gh-remember">
+      <label for="gh-remember">Ingat data ini di browser ini (jangan centang di komputer bersama)</label>
+    </div>
+    <p class="hint">Token dibuat di GitHub → Settings → Developer settings → Fine-grained tokens. Beri akses hanya ke repo ini, permission "Contents: Read and write". Token tidak pernah dikirim ke mana pun selain GitHub.</p>
+    <button class="btn-secondary" id="btn-load" style="width:auto;">Muat data saat ini dari GitHub</button>
+  </section>
+
+  <section id="sec-profile">
+    <h2>Profil</h2>
+    <img id="photo-preview" class="photo-preview" style="display:none;">
+    <label>Nama</label>
+    <input type="text" id="p-name">
+    <label>Deskripsi singkat</label>
+    <textarea id="p-desc"></textarea>
+    <label>Foto (upload file, akan disimpan ke repo)</label>
+    <input type="file" id="p-photo-file" accept="image/*">
+    <p class="hint">Atau kosongkan lalu isi URL foto langsung di bawah ini (kalau sudah ada foto di hosting lain).</p>
+    <label>URL Foto (opsional)</label>
+    <input type="text" id="p-photo-url" placeholder="images/profile.jpg atau https://...">
+  </section>
+
+  <section id="sec-social">
+    <h2>Social Media</h2>
+    <label>Posisi ikon social media</label>
+    <div class="radio-group">
+      <label><input type="radio" name="social-pos" value="top" checked> Di atas (dekat foto)</label>
+      <label><input type="radio" name="social-pos" value="bottom"> Di bawah tombol link</label>
+    </div>
+    <div id="social-list"></div>
+    <button class="btn-add" id="btn-add-social">+ Tambah social media</button>
+  </section>
+
+  <section id="sec-links">
+    <h2>Tombol Link</h2>
+    <div id="link-list"></div>
+    <button class="btn-add" id="btn-add-link">+ Tambah link</button>
+  </section>
+
+  <button class="btn-primary" id="btn-save">Simpan ke GitHub</button>
+  <div class="status" id="status"></div>
+</main>
+
+<script>
+const PLATFORMS = {
+  instagram: {label:'Instagram', mono:'IG'},
+  tiktok: {label:'TikTok', mono:'TT'},
+  youtube: {label:'YouTube', mono:'YT'},
+  facebook: {label:'Facebook', mono:'FB'},
+  x: {label:'X / Twitter', mono:'X'},
+  linkedin: {label:'LinkedIn', mono:'IN'},
+  whatsapp: {label:'WhatsApp', mono:'WA'},
+  email: {label:'Email', mono:'@'},
+  spotify: {label:'Spotify', mono:'SP'},
+  pinterest: {label:'Pinterest', mono:'PN'},
+  threads: {label:'Threads', mono:'TH'},
+  website: {label:'Website', mono:'W'},
+  custom: {label:'Custom', mono:''}
+};
+
+let fileSha = null;   // sha of data.json, needed to update it
+let photoFile = null; // pending upload
+let uid = 0;
+const newId = () => 'id' + (Date.now()) + (uid++);
+
+function cfg(){
+  return {
+    owner: document.getElementById('gh-owner').value.trim(),
+    repo: document.getElementById('gh-repo').value.trim(),
+    branch: document.getElementById('gh-branch').value.trim() || 'main',
+    token: document.getElementById('gh-token').value.trim()
+  };
+}
+
+function setStatus(msg, type){
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = 'status ' + (type || '');
+}
+
+// ---------- localStorage remember ----------
+function loadRemembered(){
+  const raw = localStorage.getItem('linkbio_admin_cfg');
+  if(!raw) return;
+  try{
+    const c = JSON.parse(raw);
+    document.getElementById('gh-owner').value = c.owner || '';
+    document.getElementById('gh-repo').value = c.repo || '';
+    document.getElementById('gh-branch').value = c.branch || 'main';
+    document.getElementById('gh-token').value = c.token || '';
+    document.getElementById('gh-remember').checked = true;
+  }catch(e){}
+}
+function maybeRemember(){
+  if(document.getElementById('gh-remember').checked){
+    localStorage.setItem('linkbio_admin_cfg', JSON.stringify(cfg()));
+  }else{
+    localStorage.removeItem('linkbio_admin_cfg');
+  }
+}
+
+// ---------- GitHub API helpers ----------
+async function ghGetFile(path){
+  const c = cfg();
+  const url = `https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}?ref=${encodeURIComponent(c.branch)}`;
+  const res = await fetch(url, {
+    headers:{ 'Authorization': `Bearer ${c.token}`, 'Accept':'application/vnd.github+json' }
+  });
+  if(res.status === 404) return null;
+  if(!res.ok) throw new Error(`Gagal ambil ${path} (${res.status})`);
+  return await res.json();
+}
+
+async function ghPutFile(path, base64Content, message, sha){
+  const c = cfg();
+  const url = `https://api.github.com/repos/${c.owner}/${c.repo}/contents/${path}`;
+  const body = { message, content: base64Content, branch: c.branch };
+  if(sha) body.sha = sha;
+  const res = await fetch(url, {
+    method:'PUT',
+    headers:{ 'Authorization': `Bearer ${c.token}`, 'Accept':'application/vnd.github+json', 'Content-Type':'application/json' },
+    body: JSON.stringify(body)
+  });
+  if(!res.ok){
+    const err = await res.json().catch(()=>({}));
+    throw new Error(err.message || `Gagal simpan ${path} (${res.status})`);
+  }
+  return await res.json();
+}
+
+function utf8ToBase64(str){
+  return btoa(unescape(encodeURIComponent(str)));
+}
+function base64ToUtf8(str){
+  return decodeURIComponent(escape(atob(str)));
+}
+
+// ---------- Social rows ----------
+function addSocialRow(data){
+  data = data || { id:newId(), platform:'instagram', label:PLATFORMS.instagram.label, mono:PLATFORMS.instagram.mono, url:'' };
+  const list = document.getElementById('social-list');
+  const wrap = document.createElement('div');
+  wrap.className = 'field-group';
+  wrap.dataset.id = data.id;
+
+  const platformOptions = Object.entries(PLATFORMS).map(([key,v]) =>
+    `<option value="${key}" ${data.platform===key?'selected':''}>${v.label}</option>`
+  ).join('');
+
+  wrap.innerHTML = `
+    <div class="field-row">
+      <div>
+        <label>Platform</label>
+        <select class="s-platform">${platformOptions}</select>
+        <div class="row s-custom-row" style="display:${data.platform==='custom'?'flex':'none'};">
+          <div><label>Nama label</label><input type="text" class="s-label" value="${escAttr(data.label)}"></div>
+          <div><label>Monogram (max 3 huruf)</label><input type="text" maxlength="3" class="s-mono" value="${escAttr(data.mono)}"></div>
+        </div>
+        <label>URL profil</label>
+        <input type="text" class="s-url" value="${escAttr(data.url)}" placeholder="https://...">
+      </div>
+      <div class="mini-btns">
+        <button type="button" class="btn-icon s-up">↑</button>
+        <button type="button" class="btn-icon s-down">↓</button>
+        <button type="button" class="btn-icon btn-remove s-remove">✕</button>
+      </div>
+    </div>
+  `;
+  list.appendChild(wrap);
+
+  const platformSel = wrap.querySelector('.s-platform');
+  const customRow = wrap.querySelector('.s-custom-row');
+  platformSel.addEventListener('change', () => {
+    customRow.style.display = platformSel.value === 'custom' ? 'flex' : 'none';
+  });
+  wrap.querySelector('.s-remove').addEventListener('click', () => wrap.remove());
+  wrap.querySelector('.s-up').addEventListener('click', () => moveRow(wrap, -1));
+  wrap.querySelector('.s-down').addEventListener('click', () => moveRow(wrap, 1));
+}
+
+function addLinkRow(data){
+  data = data || { id:newId(), title:'', url:'' };
+  const list = document.getElementById('link-list');
+  const wrap = document.createElement('div');
+  wrap.className = 'field-group';
+  wrap.dataset.id = data.id;
+  wrap.innerHTML = `
+    <div class="field-row">
+      <div>
+        <label>Judul tombol</label>
+        <input type="text" class="l-title" value="${escAttr(data.title)}" placeholder="Book via WhatsApp">
+        <label>URL</label>
+        <input type="text" class="l-url" value="${escAttr(data.url)}" placeholder="https://...">
+      </div>
+      <div class="mini-btns">
+        <button type="button" class="btn-icon l-up">↑</button>
+        <button type="button" class="btn-icon l-down">↓</button>
+        <button type="button" class="btn-icon btn-remove l-remove">✕</button>
+      </div>
+    </div>
+  `;
+  list.appendChild(wrap);
+  wrap.querySelector('.l-remove').addEventListener('click', () => wrap.remove());
+  wrap.querySelector('.l-up').addEventListener('click', () => moveRow(wrap, -1));
+  wrap.querySelector('.l-down').addEventListener('click', () => moveRow(wrap, 1));
+}
+
+function moveRow(el, dir){
+  const parent = el.parentElement;
+  if(dir === -1 && el.previousElementSibling){
+    parent.insertBefore(el, el.previousElementSibling);
+  }else if(dir === 1 && el.nextElementSibling){
+    parent.insertBefore(el.nextElementSibling, el);
+  }
+}
+
+function escAttr(str){
+  return String(str||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+// ---------- Collect form state ----------
+function collectSocials(){
+  return Array.from(document.querySelectorAll('#social-list .field-group')).map(wrap => {
+    const platform = wrap.querySelector('.s-platform').value;
+    const isCustom = platform === 'custom';
+    const label = isCustom ? wrap.querySelector('.s-label').value.trim() : PLATFORMS[platform].label;
+    const mono = isCustom ? wrap.querySelector('.s-mono').value.trim().toUpperCase() : PLATFORMS[platform].mono;
+    return {
+      id: wrap.dataset.id,
+      platform, label, mono,
+      url: wrap.querySelector('.s-url').value.trim()
+    };
+  }).filter(s => s.url);
+}
+
+function collectLinks(){
+  return Array.from(document.querySelectorAll('#link-list .field-group')).map(wrap => ({
+    id: wrap.dataset.id,
+    title: wrap.querySelector('.l-title').value.trim(),
+    url: wrap.querySelector('.l-url').value.trim()
+  })).filter(l => l.title && l.url);
+}
+
+// ---------- Load from GitHub ----------
+document.getElementById('btn-load').addEventListener('click', async () => {
+  maybeRemember();
+  const c = cfg();
+  if(!c.owner || !c.repo || !c.token){
+    setStatus('Isi username, nama repo, dan token dulu.', 'err');
+    return;
+  }
+  setStatus('Memuat data dari GitHub...', 'loading');
+  try{
+    const file = await ghGetFile('data.json');
+    if(!file){
+      setStatus('data.json belum ada di repo ini — isi form lalu klik Simpan untuk membuatnya.', 'ok');
+      fileSha = null;
+      return;
+    }
+    fileSha = file.sha;
+    const data = JSON.parse(base64ToUtf8(file.content));
+    populateForm(data);
+    setStatus('Data berhasil dimuat.', 'ok');
+  }catch(e){
+    setStatus('Gagal memuat: ' + e.message, 'err');
+  }
+});
+
+function populateForm(data){
+  const p = data.profile || {};
+  document.getElementById('p-name').value = p.name || '';
+  document.getElementById('p-desc').value = p.description || '';
+  document.getElementById('p-photo-url').value = p.photo || '';
+  if(p.photo){
+    const preview = document.getElementById('photo-preview');
+    preview.src = p.photo;
+    preview.style.display = 'block';
+  }
+  const pos = data.socialsPosition === 'bottom' ? 'bottom' : 'top';
+  document.querySelector(`input[name=social-pos][value=${pos}]`).checked = true;
+
+  document.getElementById('social-list').innerHTML = '';
+  (data.socials || []).forEach(addSocialRow);
+
+  document.getElementById('link-list').innerHTML = '';
+  (data.links || []).forEach(addLinkRow);
+}
+
+// ---------- Photo upload preview ----------
+document.getElementById('p-photo-file').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  photoFile = file;
+  const reader = new FileReader();
+  reader.onload = () => {
+    const preview = document.getElementById('photo-preview');
+    preview.src = reader.result;
+    preview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
+
+// ---------- Save ----------
+document.getElementById('btn-save').addEventListener('click', async () => {
+  maybeRemember();
+  const c = cfg();
+  if(!c.owner || !c.repo || !c.token){
+    setStatus('Isi username, nama repo, dan token dulu.', 'err');
+    return;
+  }
+  setStatus('Menyimpan...', 'loading');
+  try{
+    let photoPath = document.getElementById('p-photo-url').value.trim();
+
+    if(photoFile){
+      setStatus('Mengunggah foto...', 'loading');
+      const ext = (photoFile.name.split('.').pop() || 'jpg').toLowerCase();
+      photoPath = `images/profile.${ext}`;
+      const dataUrl = await fileToDataUrl(photoFile);
+      const base64 = dataUrl.split(',')[1];
+      const existing = await ghGetFile(photoPath);
+      await ghPutFile(photoPath, base64, 'Update foto profil', existing ? existing.sha : null);
+    }
+
+    const payload = {
+      profile: {
+        name: document.getElementById('p-name').value.trim(),
+        description: document.getElementById('p-desc').value.trim(),
+        photo: photoPath
+      },
+      socialsPosition: document.querySelector('input[name=social-pos]:checked').value,
+      socials: collectSocials(),
+      links: collectLinks()
+    };
+
+    setStatus('Menyimpan data.json...', 'loading');
+    const latest = await ghGetFile('data.json'); // refresh sha to avoid conflict
+    const sha = latest ? latest.sha : null;
+    const result = await ghPutFile('data.json', utf8ToBase64(JSON.stringify(payload, null, 2)), 'Update link bio', sha);
+    fileSha = result.content.sha;
+    photoFile = null;
+    setStatus('Tersimpan! GitHub Pages biasanya butuh sekitar 30–60 detik untuk update halaman publik.', 'ok');
+  }catch(e){
+    setStatus('Gagal menyimpan: ' + e.message, 'err');
+  }
+});
+
+function fileToDataUrl(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// ---------- Init ----------
+document.getElementById('btn-add-social').addEventListener('click', () => addSocialRow());
+document.getElementById('btn-add-link').addEventListener('click', () => addLinkRow());
+loadRemembered();
+if(document.getElementById('social-list').children.length === 0) addSocialRow();
+if(document.getElementById('link-list').children.length === 0) addLinkRow();
+</script>
+</body>
+</html>

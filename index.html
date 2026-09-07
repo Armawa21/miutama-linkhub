@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mike Armawa</title>
+<meta name="description" content="Links">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#15120e;
+    --surface:#1e1a15;
+    --surface-hover:#26201a;
+    --text:#efeae0;
+    --text-muted:#9c9284;
+    --accent:#c09a6b;
+    --border:rgba(239,234,224,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Manrope',sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:56px 20px 40px;
+  }
+  main{
+    width:100%;
+    max-width:420px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .photo{
+    width:104px;
+    height:104px;
+    border-radius:50%;
+    object-fit:cover;
+    border:1px solid var(--border);
+    background:var(--surface);
+    margin-bottom:22px;
+  }
+  .photo-placeholder{
+    width:104px;
+    height:104px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:var(--surface);
+    margin-bottom:22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Cormorant Garamond',serif;
+    font-size:34px;
+    color:var(--accent);
+  }
+  h1{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:32px;
+    margin:0 0 10px;
+    text-align:center;
+    letter-spacing:0.2px;
+  }
+  .desc{
+    font-size:14.5px;
+    line-height:1.55;
+    color:var(--text-muted);
+    text-align:center;
+    max-width:320px;
+    margin:0 0 26px;
+  }
+  .socials{
+    display:flex;
+    gap:12px;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .social-badge{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:0.3px;
+    color:var(--accent);
+    text-decoration:none;
+    transition:border-color .18s ease, background .18s ease;
+  }
+  .social-badge:hover{
+    border-color:var(--accent);
+    background:var(--surface);
+  }
+  .links{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .link-btn{
+    position:relative;
+    display:block;
+    width:100%;
+    padding:16px 20px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:3px;
+    color:var(--text);
+    text-decoration:none;
+    font-size:15px;
+    font-weight:500;
+    text-align:center;
+    overflow:hidden;
+    transition:background .18s ease, border-color .18s ease;
+  }
+  .link-btn::before{
+    content:"";
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width:3px;
+    background:var(--accent);
+    transform:scaleY(0);
+    transition:transform .22s ease;
+  }
+  .link-btn:hover{
+    background:var(--surface-hover);
+    border-color:var(--accent);
+  }
+  .link-btn:hover::before{
+    transform:scaleY(1);
+  }
+  footer{
+    margin-top:44px;
+    font-size:12px;
+    color:var(--text-muted);
+    opacity:0.6;
+  }
+  .empty-state{
+    font-size:14px;
+    color:var(--text-muted);
+    text-align:center;
+    padding:40px 0;
+  }
+</style>
+</head>
+<body>
+  <main id="app">
+    <div class="empty-state">Loading…</div>
+  </main>
+
+<script>
+async function loadData(){
+  try{
+    const res = await fetch('./data.json?_=' + Date.now());
+    if(!res.ok) throw new Error('fetch failed');
+    return await res.json();
+  }catch(e){
+    return null;
+  }
+}
+
+function initials(name){
+  return (name || '').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+}
+
+function renderSocials(socials){
+  if(!socials || !socials.length) return '';
+  const items = socials.map(s => `
+    <a class="social-badge" href="${escapeAttr(s.url)}" target="_blank" rel="noopener" aria-label="${escapeAttr(s.label || s.platform)}">${escapeHtml(s.mono || (s.label||'').slice(0,2).toUpperCase())}</a>
+  `).join('');
+  return `<div class="socials">${items}</div>`;
+}
+
+function escapeHtml(str){
+  return String(str||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+function escapeAttr(str){ return escapeHtml(str); }
+
+async function render(){
+  const app = document.getElementById('app');
+  const data = await loadData();
+
+  if(!data){
+    app.innerHTML = '<div class="empty-state">Belum ada konten. Isi lewat halaman admin.</div>';
+    return;
+  }
+
+  const profile = data.profile || {};
+  const photoHtml = profile.photo
+    ? `<img class="photo" src="${escapeAttr(profile.photo)}" alt="${escapeAttr(profile.name||'')}">`
+    : `<div class="photo-placeholder">${escapeHtml(initials(profile.name))}</div>`;
+
+  const socialsHtml = renderSocials(data.socials);
+  const linksHtml = (data.links && data.links.length)
+    ? data.links.map(l => `<a class="link-btn" href="${escapeAttr(l.url)}" target="_blank" rel="noopener">${escapeHtml(l.title)}</a>`).join('')
+    : '<div class="empty-state">Belum ada link.</div>';
+
+  app.innerHTML = `
+    ${photoHtml}
+    <h1>${escapeHtml(profile.name || '')}</h1>
+    ${profile.description ? `<p class="desc">${escapeHtml(profile.description)}</p>` : ''}
+    ${data.socialsPosition !== 'bottom' ? socialsHtml : ''}
+    <div class="links">${linksHtml}</div>
+    ${data.socialsPosition === 'bottom' ? socialsHtml : ''}
+    <footer>&copy; ${new Date().getFullYear()} ${escapeHtml(profile.name || '')}</footer>
+  `;
+}
+
+render();
+</script>
+</body>
+</html>
