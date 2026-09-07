@@ -47,7 +47,7 @@
     },
     {
       "id": "id17887902742225",
-      "title": "TRAVELS",
+      "title": "TOURS & TRAVELS",
       "links": [
         {
           "id": "id17887902742226",
@@ -72,12 +72,17 @@
     },
     {
       "id": "id178879047890516",
-      "title": "CREATIVE",
+      "title": "DIGITAL CREATIVE",
       "links": [
         {
           "id": "id178879073131422",
           "title": "MAVIS Creative",
           "url": "https://mavisuals21.wixsite.com/mavis"
+        },
+        {
+          "id": "id178879095494124",
+          "title": "Link Bio",
+          "url": "https://lynk.id/mavis.project"
         }
       ],
       "socials": [
@@ -92,6 +97,12 @@
           "platform": "whatsapp",
           "label": "WhatsApp",
           "url": "https://api.whatsapp.com/send?phone=62 87773388829"
+        },
+        {
+          "id": "id178879081500823",
+          "platform": "email",
+          "label": "Email",
+          "url": "mailto:ma.visuals21@gmail.com"
         }
       ]
     },
@@ -115,6 +126,28 @@
           "id": "id178879027422210",
           "title": "Private Site",
           "url": "https://miutababycare.manus.space/"
+        }
+      ],
+      "socials": []
+    },
+    {
+      "id": "id178879120519125",
+      "title": "TRUSTIC",
+      "links": [
+        {
+          "id": "id178879124756028",
+          "title": "Trustic.id",
+          "url": "https://www.instagram.com/trustic.id/"
+        },
+        {
+          "id": "id178879128671230",
+          "title": "Trustic.florist",
+          "url": "https://www.instagram.com/trustic.florist/"
+        },
+        {
+          "id": "id178879125772529",
+          "title": "Trustic.label",
+          "url": "https://www.instagram.com/trustic.label/"
         }
       ],
       "socials": []
